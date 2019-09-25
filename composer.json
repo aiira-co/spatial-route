@@ -1,0 +1,26 @@
+{
+    "name": "spatial/route",
+    "description": "PHP routing which contains Authourization, CORS, nexted routes",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "projectair",
+            "email": "airdesign.code@gmail.com"
+        }
+    ],
+    "require": {
+        "psr/http-message": "^1.0",
+        "guzzlehttp/psr7": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spatial\\Router\\": "src/"
+          }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Spatial\\Api\\": "test/"
+        }
+      }
+}
