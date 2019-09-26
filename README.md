@@ -41,7 +41,7 @@ $route = new Route();
 $route->mapRoute(
     "DefaultAPI", // name
     "api/{controller}/{id}", //routeTemplate
-    new class(){ public id = 2 } //defaults
+    new class(){ public $id = 2; } //defaults
 );
 
 // initialize the RouterModule to set routes
