@@ -1,6 +1,6 @@
 # Spatial Route - Robost request router for PHP
 
-PHP routing which contains Authourization, CORS, nexted routes
+Set defaultContentType(), enableCache(), allowedMethods(), controllerNamespaceMap(), and authGuard() to list Authorization(CanActivate Interface) Objects
 
 Routing is responsible for mapping request URIs to endpoint selectors and dispatching incoming requests to endpoints. Routes are defined in the app and configured when the app starts. A route can optionally extract values from the URL contained in the request, and these values can then be used for request processing. Using route information from the app, routing is also able to generate URLs that map to endpoint selectors.
 
@@ -79,12 +79,12 @@ public class ProductsController extends ApiController
 ```
 
 Here are some possible HTTP requests, along with the action that gets invoked for each:
-|HTTP Verb  | URI Path	        | Method / Action   | Parameter
-|:--------- |:-----------------:|:-----------------:|
-|GET	    | api/products	    | httpGet	        | (none)
-|GET    	| api/products/4	| httpGet	        | 4
-|DELETE	    | api/products/4	| httpDelete	    | 4
-|POST	    | api/products	    | (no match)	    | 
+|HTTP Verb  | URI Path	        | Method / Action   | Parameter |
+|:--------- |:-----------------:|:-----------------:|----------:|
+|GET	    | api/products	    | httpGet	        | (none)    |
+|GET    	| api/products/4	| httpGet	        | 4         |
+|DELETE	    | api/products/4	| httpDelete	    | 4         |
+|POST	    | api/products	    | (no match)	    |           |
 
 Notice that the {id} segment of the URI, if present, is mapped to the id parameter of the action. In this example, the controller defines GET method, one with an id parameter.
 
