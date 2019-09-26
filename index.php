@@ -8,7 +8,7 @@ use Spatial\Router\RouterModule;
 $ri = new Route();
 
 $routes = [
-    $ri->mapHttpRoute(
+    $ri->mapRoute(
         'Api',
         'api/{controller}/public/{id:int}',
         new class(){
@@ -16,7 +16,7 @@ $routes = [
             public $data;
         }
     ),
-    $ri->mapHttpRoute(
+    $ri->mapRoute(
         'SuiteApi',
         'suiteapi/{controller}/public/{id}',
         new class(){

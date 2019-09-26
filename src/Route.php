@@ -14,7 +14,7 @@ class Route
   public $routeTemplate;
   public $defaults;
 
-  public function mapHttpRoute(string $name, string $routeTemplate, object $defaults): self
+  public function mapRoute(string $name, string $routeTemplate, object $defaults): self
   {
     $this->name = trim($name);
     $this->routeTemplate = urlencode(trim($routeTemplate, '/'));
