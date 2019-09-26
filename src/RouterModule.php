@@ -14,7 +14,7 @@ class RouterModule
     private $_contentType;
     private $_namespaceMap = '';
 
-    public function routeConfig(array $routes): self
+    public function routeConfig(Route ...$routes): self
     {
         $this->_routes = new Route;
         // var_dump($routes);
