@@ -140,7 +140,7 @@ $routes = [
 
 // initialize the RouterModule to set routes
 $appModule = new RouterModule();
-$appModule->routeConfig($routes)
+$appModule->routeConfig(...$routes)
             ->allowedMethods('GET, POST, PUT, DELETE')
             ->enableCache(true)
             ->authGuard() // takes in list objects for authorization with interface CanActivate

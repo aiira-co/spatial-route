@@ -11,7 +11,8 @@ $routes = [
     $ri->mapRoute(
         'Api',
         'api/{controller}/public/{id:int}',
-        new class(){
+        new class ()
+        {
             public $id = 3;
             public $data;
         }
@@ -19,7 +20,8 @@ $routes = [
     $ri->mapRoute(
         'SuiteApi',
         'suiteapi/{controller}/public/{id}',
-        new class(){
+        new class ()
+        {
             public $id = 3;
             public $data;
         }
@@ -40,12 +42,12 @@ $routes = [
 //     );
 
 $appModule = new RouterModule();
-$appModule->routeConfig($routes)
-            ->allowedMethods('GET, POST, PUT, DELETE')
-            ->enableCache(true)
-            ->authGuard()
-            ->defaultContentType('application/json')
-            ->controllerNamespaceMap('Spatial\\{name}\\Controllers\\');
+$appModule->routeConfig(...$routes)
+    ->allowedMethods('GET, POST, PUT, DELETE')
+    ->enableCache(true)
+    ->authGuard()
+    ->defaultContentType('application/json')
+    ->controllerNamespaceMap('Spatial\\{name}\\Controllers\\');
 
 // echo (new Request)->getBody();
 
