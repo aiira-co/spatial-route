@@ -6,7 +6,7 @@ Routing is responsible for mapping request URIs to endpoint selectors and dispat
 
 ## Install
 
-To install with composer:
+You should install [Route with Composer](https://getcomposer.org):
 
 ```sh
 composer require spatial/route
