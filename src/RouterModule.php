@@ -181,7 +181,7 @@ class RouterModule
                 array_push($args, $this->_routeMap->defaults->{$param->getName() ?? null});
             }
 
-            return $controller->httpGet(...$args);
+            return $controller->$method(...$args);
         }
     }
 
