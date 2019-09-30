@@ -49,43 +49,46 @@ class Route
         // echo $routeArr[$i];
 
         $placeholder = str_replace('}', '', str_replace('{', '', $routeArr[$i]));
-        $value = $uriArr[$i] ?? $this->defaults->{$placeholder[0]} ?? null;
-        // echo $placeholder;
-        // separate contraints
-        $placeholder = explode(':', $placeholder);
+          // echo $placeholder;
+          // separate contraints
+          $placeholder = explode(':', $placeholder);
+          $value = $uriArr[$i] ?? $this->defaults->{$placeholder[0]} ?? null;
         if (isset($placeholder[1])) {
           $typeValue = explode('=', $placeholder[1]);
           if (isset($typeValue[1])) {
             $value = $value ?? $typeValue[1];
           }
+          if (!is_null($value)) {
 
-          switch ($placeholder[1]) {
-            case 'int':
-              $value = (int) $value;
-              break;
+            switch ($placeholder[1]) {
+              case 'int':
+                $value = (int) $value;
+                break;
 
-            case 'bool':
-              $value = (bool) $value;
-              break;
+              case 'bool':
+                $value = (bool) $value;
+                break;
 
-            case 'string':
-              $value = (string) $value;
-              break;
+              case 'string':
+                $value = (string) $value;
+                break;
 
-            case 'array':
-              $value = (array) $value;
-              break;
-            case 'float':
-              $value = (array) $value;
-              break;
+              case 'array':
+                $value = (array) $value;
+                break;
+              case 'float':
+                $value = (array) $value;
+                break;
 
-            case 'object':
-              $value = (object) $value;
-              break;
+              case 'object':
+                $value = (object) $value;
+                break;
 
-            default:
-              # code...
-              break;
+              default:
+                # code...
+                $value = $value;
+                break;
+            }
           }
         }
         $this->defaults->{$placeholder[0]} = $value;

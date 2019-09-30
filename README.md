@@ -71,7 +71,9 @@ Let's look at an example. Suppose that you define the following controller:
 
 ```php
 <?php
+
 use Spatial\Psr7\Response;
+
 public class ProductsController extends ApiController
 {
     public function httpGet(int $id): ?Response { }
@@ -80,12 +82,12 @@ public class ProductsController extends ApiController
 ```
 
 Here are some possible HTTP requests, along with the action that gets invoked for each:
-    |HTTP Verb  | URI Path	        | Method / Action   | Parameter |
-    |:--------- |:-----------------:|:-----------------:| ---------:|
-    |GET	    | api/products	    | httpGet	        | (none)    |
-    |GET    	| api/products/4	| httpGet	        | 4         |
-    |DELETE	    | api/products/4	| httpDelete	    | 4         |
-    |POST	    | api/products	    | (no match)	    |           |
+| HTTP Verb | URI Path       | Method / Action | Paramter |
+|-----------|----------------|-----------------|----------|
+| GET       | api/products   | httpGet         | (none)   |
+| GET       | api/products/4 | httpGet         | 4        |
+| DELETE    | api/products/4 | httpDelete      | 4        |
+| POST      | api/products   | (no match)      |          |
 
 Notice that the {id} segment of the URI, if present, is mapped to the id parameter of the action. In this example, the controller defines GET method, one with an id parameter.
 
