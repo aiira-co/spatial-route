@@ -71,6 +71,7 @@ Let's look at an example. Suppose that you define the following controller:
 
 ```php
 <?php
+use Spatial\Psr7\Response;
 public class ProductsController extends ApiController
 {
     public function httpGet(int $id): ?Response { }

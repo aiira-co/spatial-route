@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Spatial\Router;
 
 use Psr\Http\Message\ResponseInterface;
+use Spatial\Psr7\Response;
 
 class RouterModule
 {
@@ -118,16 +119,16 @@ class RouterModule
         }
 
         if (!$isValid) {
-            return (new Response)->withStatus(404, 'uri doest match route template');
+            return (new Response())->withStatus(404, 'uri doest match route template');
         }
 
         if (!property_exists($this->_routeMap->defaults, 'controller')) {
-            return (new Response)->withStatus(404, 'Controller not specied');
+            return (new Response())->withStatus(404, 'Controller not specied');
         }
 
         $controller = $this->_getController();
         if (\is_null($controller)) {
-            return (new Response)->withStatus(404, 'Controller not found');
+            return (new Response())->withStatus(404, 'Controller not found');
         }
 
         // if(property_exists($this->_routeMap->defaults,'action'))

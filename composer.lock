@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43949d7ae7fab72b673e2f4545ca0e5c",
+    "content-hash": "a646ec313e6f06378e4e49837b4e0f4f",
     "packages": [
         {
             "name": "guzzlehttp/psr7",
@@ -166,14 +166,55 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "spatial/psr7",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/air-Design/spatial-psr7.git",
+                "reference": "cbcb7184943484ae15df31f887ef5d95f1defd68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/air-Design/spatial-psr7/zipball/cbcb7184943484ae15df31f887ef5d95f1defd68",
+                "reference": "cbcb7184943484ae15df31f887ef5d95f1defd68",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/psr7": "^1.6",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatial\\Psr7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "projectair",
+                    "email": "airdesign.code@gmail.com"
+                }
+            ],
+            "description": "PSR 7 (GuzzleHttp) implementation for Spatial Framework. Request & Response Classes for spatial-mediator & spatial-route",
+            "time": "2019-09-30T13:58:13+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "spatial/psr7": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.2"
+    },
     "platform-dev": []
 }

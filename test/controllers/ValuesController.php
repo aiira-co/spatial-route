@@ -2,7 +2,7 @@
 
 namespace Spatial\Api\Controllers;
 
-use Spatial\Router\Response;
+use Spatial\Psr7\Response;
 
 /**
  * ValuesController Class exists in the Api\Controllers namespace

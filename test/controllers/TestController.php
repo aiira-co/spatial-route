@@ -7,6 +7,7 @@ use Core\Application\Logics\App\Command\CreatePerson;
 use Core\Application\Logics\App\Command\UpdatePerson;
 use Core\Application\Logics\App\Command\DeletePerson;
 use Spatial\MediatR\Mediator;
+use Spatial\Psr7\Response;
 
 /**
  * ValuesController Class exists in the Api\Controllers namespace
