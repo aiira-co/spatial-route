@@ -14,7 +14,11 @@ $routes = [
         new class ()
         {
             public $id = 3;
-            public $data;
+            public $content;
+            function __construct()
+            {
+                $this->content = file_get_contents('php://input');
+            }
         }
     ),
     $ri->mapRoute(
@@ -23,7 +27,11 @@ $routes = [
         new class ()
         {
             public $id = 3;
-            public $data;
+            public $content;
+            function __construct()
+            {
+                $this->content = file_get_contents('php://input');
+            }
         }
     )
 ];
@@ -48,6 +56,7 @@ $appModule->routeConfig(...$routes)
     ->authGuard()
     ->defaultContentType('application/json')
     ->controllerNamespaceMap('Spatial\\{name}\\Controllers\\');
+// ->defaultParams('Spatial\\{name}\\Controllers\\');
 
 // echo (new Request)->getBody();
 

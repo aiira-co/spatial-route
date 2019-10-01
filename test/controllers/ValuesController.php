@@ -40,10 +40,10 @@ class ValuesController
 
     /**
      * The Method httpPost() called to handle a POST request
-     * This method requires a body(json) which is passed as the var array $form
+     * This method requires a body(json) which is passed as the var array $content
      * URI: POST: https://api.com/values
      */
-    public function httpPost(array $form): Response
+    public function httpPost(string $content): Response
     {
         $postId = null;
 
@@ -56,11 +56,11 @@ class ValuesController
 
     /**
      * The Method httpPut() called to handle a PUT request
-     * This method requires a body(json) which is passed as the var array $form and
+     * This method requires a body(json) which is passed as the var array $content and
      * An id as part of the uri.
      * URI: POST: https://api.com/values/2 the number 2 in the uri is passed as int $id to the method
      */
-    public function httpPut(array $form, int $id): Response
+    public function httpPut(string $content, int $id): Response
     {
 
         // code here

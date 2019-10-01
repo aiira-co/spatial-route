@@ -41,28 +41,28 @@ class TestController
 
     /**
      * The Method httpPost() called to handle a POST request
-     * This method requires a body(json) which is passed as the var array $data
+     * This method requires a body(json) which is passed as the var string $content
      * URI: POST: https://api.com/values
      */
-    public function httpPost(array $data): Response
+    public function httpPost(string $content): Response
     {
         $r = new CreatePerson();
-        $r->data = $data;
+        $r->data = json_decode($content);
         return $this->mediator->process($r);
     }
 
     /**
      * The Method httpPut() called to handle a PUT request
-     * This method requires a body(json) which is passed as the var array $form and
+     * This method requires a body(json) which is passed as the var array $content and
      * An id as part of the uri.
      * URI: POST: https://api.com/values/2 the number 2 in the uri is passed as int $id to the method
      */
-    public function httpPut(array $form, int $id): Response
+    public function httpPut(string $content, int $id): Response
     {
 
         // code here
         $r = new UpdatePerson();
-        $r->data = $form;
+        $r->data = json_decode($content);
         $r->id = $id;
         return $this->mediator->process($r);
     }
