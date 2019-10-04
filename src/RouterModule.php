@@ -14,9 +14,17 @@ class RouterModule
     private $_routeMap;
     private $_contentType;
     private $_namespaceMap = '';
+    private $isCORS = false;
+
+    function __construct()
+    {
+        $http_origin = $_SERVER['HTTP_ORIGIN'];
+        header("Access-Control-Allow-Origin: $http_origin");
+    }
 
     public function routeConfig(Route ...$routes): self
     {
+
         $this->_routes = new Route;
         // var_dump($routes);
         $this->_routes->setHttpRoutes(...$routes);
@@ -29,14 +37,51 @@ class RouterModule
         return $this;
     }
 
+    /**
+     * Set Authorizations For Route Access
+     * This takes in A class with CanActivate Interface which contians a 
+     * canActivate(string $url):bool method.
+     * If the metod returns true, authorization is passed else denied
+     *
+     * @param CanActivate ...$guards
+     * @return self
+     */
     public function authGuard(CanActivate ...$guards): self
     {
         // cors can be part of the cors
         return $this;
     }
-
+    /**
+     * Set Allowed Methods for API
+     * header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS')
+     *
+     * @param string $httpMethods
+     * @return self
+     */
     public function allowedMethods(string $httpMethods): self
     {
+        header('Access-Control-Allow-Methods: ' . $httpMethods);
+        return $this;
+    }
+
+    /**
+     * Set CORS for API
+     *header("Access-Control-Allow-Origin: *");
+
+     * @param string ...$httpOrgins
+     * @return self
+     */
+    public function allowedOrigins(string ...$httpOrgins): self
+    {
+        $this->isCORS = true;
+
+        $http_origin = $_SERVER['HTTP_ORIGIN'];
+        foreach ($httpOrgins as $orgin) {
+            if ($http_origin == $orgin) {
+                header("Access-Control-Allow-Origin: $http_origin");
+                break;
+            }
+        }
         return $this;
     }
 
