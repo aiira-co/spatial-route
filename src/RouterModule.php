@@ -18,8 +18,8 @@ class RouterModule
 
     function __construct()
     {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-        header("Access-Control-Allow-Origin: $http_origin");
+        // $http_origin = $_SERVER['HTTP_ORIGIN'];
+        // header("Access-Control-Allow-Origin: $http_origin");
     }
 
     public function routeConfig(Route ...$routes): self
@@ -71,16 +71,13 @@ class RouterModule
      * @param string ...$httpOrgins
      * @return self
      */
-    public function allowedOrigins(string ...$httpOrgins): self
+    public function allowedOrigins(string ...$allowedOrigins): self
     {
         $this->isCORS = true;
-
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-        foreach ($httpOrgins as $orgin) {
-            if ($http_origin == $orgin) {
-                header("Access-Control-Allow-Origin: $http_origin");
-                break;
-            }
+        if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER["HTTP_ORIGIN"], $allowedOrigins)) {
+            header("Access-Control-Allow-Origin: " . $_SERVER["HTTP_ORIGIN"]);
+            header('Access-Control-Allow-Credentials: true');
+            header('Access-Control-Max-Age: 86400');    // cache for 1 day
         }
         return $this;
     }
@@ -200,7 +197,8 @@ class RouterModule
         if ($uri === '') {
             return '/';
         }
-        return $uri;
+
+        return strtolower($uri);
     }
 
     private function _getController(): ?object

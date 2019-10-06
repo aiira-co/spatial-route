@@ -17,7 +17,7 @@ class Route
   public function mapRoute(string $name, string $routeTemplate, object $defaults): self
   {
     $this->name = trim($name);
-    $this->routeTemplate = urlencode(trim($routeTemplate, '/'));
+    $this->routeTemplate = urlencode(strtolower(trim($routeTemplate, '/')));
     $this->defaults = $defaults;
 
     return clone $this;
@@ -49,10 +49,10 @@ class Route
         // echo $routeArr[$i];
 
         $placeholder = str_replace('}', '', str_replace('{', '', $routeArr[$i]));
-          // echo $placeholder;
-          // separate contraints
-          $placeholder = explode(':', $placeholder);
-          $value = $uriArr[$i] ?? $this->defaults->{$placeholder[0]} ?? null;
+        // echo $placeholder;
+        // separate contraints
+        $placeholder = explode(':', $placeholder);
+        $value = $uriArr[$i] ?? $this->defaults->{$placeholder[0]} ?? null;
         if (isset($placeholder[1])) {
           $typeValue = explode('=', $placeholder[1]);
           if (isset($typeValue[1])) {
