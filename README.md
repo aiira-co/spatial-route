@@ -73,21 +73,35 @@ Let's look at an example. Suppose that you define the following controller:
 <?php
 
 use Spatial\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 public class ProductsController extends ApiController
 {
-    public function httpGet(int $id): ?Response { }
-    public function httpDelete(int $id): Response{ }
+    public function httpGet(int $id): ResponseInterface {
+        $data = [
+            'app api',
+            'value1',
+            'value2',
+            $id
+        ];
+        $payload = json_encode($data);
+
+        $response = new Response();
+        $response->getBody()->write($payload);
+        return $response;
+     }
+
+    public function httpDelete(int $id): ResponseInterface{ #code here }
 }
 ```
 
 Here are some possible HTTP requests, along with the action that gets invoked for each:
-| HTTP Verb | URI Path       | Method / Action | Paramter |
+| HTTP Verb | URI Path | Method / Action | Paramter |
 |-----------|----------------|-----------------|----------|
-| GET       | api/products   | httpGet         | (none)   |
-| GET       | api/products/4 | httpGet         | 4        |
-| DELETE    | api/products/4 | httpDelete      | 4        |
-| POST      | api/products   | (no match)      |          |
+| GET | api/products | httpGet | (none) |
+| GET | api/products/4 | httpGet | 4 |
+| DELETE | api/products/4 | httpDelete | 4 |
+| POST | api/products | (no match) | |
 
 Notice that the {id} segment of the URI, if present, is mapped to the id parameter of the action. In this example, the controller defines GET method, one with an id parameter.
 
@@ -100,13 +114,13 @@ With the default routing template, Web API uses the HTTP verb to select the acti
 ```php
 <?php
 $route->mapRoute(
-    "DefaultAPI", 
+    "DefaultAPI",
     "api/{controller}/{action}/{id}",
     new class(){ public id = 2 }
 );
 ```
-In this route template, the {action} parameter names the action method on the controller.
 
+In this route template, the {action} parameter names the action method on the controller.
 
 ```php
 <?php
@@ -128,14 +142,18 @@ $routes = [
         // default values for the routeTemplate
         new class(){
             public $id = 3;
-            public $data;
+            public $content;
+
+            function __construct()
+            {
+                $this->content = file_get_contents('php://input');
+            }
         }
     ),
     $ri->mapRoute(
         'SuiteApi',
-        'suiteapi/{controller}/public/{id}',
+        'suiteapi/{controller}/public/{...param}',
         new class(){
-            public $id = 3;
             public $data;
         }
     )
@@ -168,6 +186,64 @@ $r->mapRoute($name, $routeTemplate, $defaults);
 The `$name` is a camelcase HTTP method string for which a certain route should match. It
 is possible to specify multiple valid methods using an array:
 
+In the case of having a placeholder in the routeTemplate like so: `suiteapi/{controller}/public/{...param}`.
+the three character `...` prefixing a placeholder must always be placed at the end of the routeTemplate string since it represents an
+array list of the rest of the URI starting from that its index.
+
+### Example
+
+Say we have a route
+
+```php
+require '/path/to/vendor/autoload.php';
+
+use Spatial\Router\Route;
+use Spatial\Router\RouterModule;
+
+$route = new Route();
+$route->mapRoute(
+    "DefaultAPI", // name
+    "api/{controller}/{...param}", //routeTemplate
+    new class(){
+        public $id = 2;
+        public $content;
+
+        function __construct()
+        {
+            $this->content = file_get_contents('php://input');
+        }
+    } //defaults
+);
+
+// initialize the RouterModule to set routes
+$appModule = new RouterModule();
+$appModule->routeConfig($route);
+// view results;
+$appModule->render();
+```
+
+And its associate controller
+
+```php
+<?php
+
+use Psr\Http\Message\ResponseInterface;
+
+public class ProductsController extends ApiController
+{
+    public function httpGet(?array $param): ResponseInterface { }
+    public function httpPost(string $content): ResponseInterface { }
+    public function httpPut(string $content, int $id): ResponseInterface{ }
+}
+```
+
+Here are some possible HTTP requests, along with the action that gets invoked for each:
+| HTTP Verb | URI Path | Method / Action | Paramter |
+|-----------|----------------|-----------------|----------|
+| GET | api/products | httpGet | null |
+| GET | api/products/4 | httpGet | 4 |
+| GET | api/products/4/category/7 | httpGet | [4,'category',7] |
+| POST | api/products | httpPost | string $content |
 
 ### Credits
 

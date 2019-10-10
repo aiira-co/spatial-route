@@ -14,17 +14,9 @@ class RouterModule
     private $_routeMap;
     private $_contentType;
     private $_namespaceMap = '';
-    private $isCORS = false;
-
-    function __construct()
-    {
-        // $http_origin = $_SERVER['HTTP_ORIGIN'];
-        // header("Access-Control-Allow-Origin: $http_origin");
-    }
 
     public function routeConfig(Route ...$routes): self
     {
-
         $this->_routes = new Route;
         // var_dump($routes);
         $this->_routes->setHttpRoutes(...$routes);
@@ -37,48 +29,14 @@ class RouterModule
         return $this;
     }
 
-    /**
-     * Set Authorizations For Route Access
-     * This takes in A class with CanActivate Interface which contians a 
-     * canActivate(string $url):bool method.
-     * If the metod returns true, authorization is passed else denied
-     *
-     * @param CanActivate ...$guards
-     * @return self
-     */
     public function authGuard(CanActivate ...$guards): self
     {
         // cors can be part of the cors
         return $this;
     }
-    /**
-     * Set Allowed Methods for API
-     * header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS')
-     *
-     * @param string $httpMethods
-     * @return self
-     */
+
     public function allowedMethods(string $httpMethods): self
     {
-        header('Access-Control-Allow-Methods: ' . $httpMethods);
-        return $this;
-    }
-
-    /**
-     * Set CORS for API
-     *header("Access-Control-Allow-Origin: *");
-
-     * @param string ...$httpOrgins
-     * @return self
-     */
-    public function allowedOrigins(string ...$allowedOrigins): self
-    {
-        $this->isCORS = true;
-        if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER["HTTP_ORIGIN"], $allowedOrigins)) {
-            header("Access-Control-Allow-Origin: " . $_SERVER["HTTP_ORIGIN"]);
-            header('Access-Control-Allow-Credentials: true');
-            header('Access-Control-Max-Age: 86400');    // cache for 1 day
-        }
         return $this;
     }
 
@@ -113,7 +71,7 @@ class RouterModule
 
         // $this->_contentType = $this->_resolve($uri)->getHeaderLine('Content-Type') ?? $this->_contentType;
         // var_dump($response->getHeaders());
-
+        http_response_code($response->getStatusCode());
         echo $response->getBody();
         // echo $this->_resolve($uri)->getBody()->getContents();
     }
@@ -144,7 +102,7 @@ class RouterModule
     /**
      * Resolves a route
      */
-    private function _resolve($uri)
+    private function _resolve($uri): ResponseInterface
     {
 
         $uri = explode('/', trim($this->_formatRoute($uri), '/'));
@@ -172,11 +130,11 @@ class RouterModule
         if (\is_null($controller)) {
             return (new Response())->withStatus(404, 'Controller not found');
         }
-
         // if(property_exists($this->_routeMap->defaults,'action'))
         // {
         //  return $this->_getControllerMethod($controller,$this->_routeMap->defaults->action);
         // }
+
 
         $method = $this->_routeMap->defaults->action ?? $this->_getRequestedMethod();
         return $this->_getControllerMethod($controller, $method);
@@ -197,12 +155,12 @@ class RouterModule
         if ($uri === '') {
             return '/';
         }
-
-        return strtolower($uri);
+        return $uri;
     }
 
     private function _getController(): ?object
     {
+        // echo 'getting controller';
         $cNamspace = str_replace('{name}', $this->_routeMap->name, $this->_namespaceMap);
         $controller = $cNamspace . ucfirst($this->_routeMap->defaults->controller) . 'Controller';
         return class_exists($controller) ? new $controller : null;
@@ -220,11 +178,11 @@ class RouterModule
 
                     die('argument ' . $param->getName() . ' required');
                 }
-
+                // echo $args;
                 array_push($args, $this->_routeMap->defaults->{$param->getName() ?? null});
             }
 
-            return $controller->$method(...$args);
+            return $controller->httpGet(...$args);
         }
     }
 
