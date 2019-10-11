@@ -60,14 +60,14 @@ class Route
           }
           break;
         }
-        $this->assignValueToPlaceholder($placeholder, $uriArr[$i]);
+        $this->assignValueToPlaceholder($placeholder, $uriArr[$i] ?? null);
       }
     }
     return $isMatch;
   }
 
 
-  private function assignValueToPlaceholder(string $placeholder, string $uriValue, bool $isList = false)
+  private function assignValueToPlaceholder(string $placeholder, ?string $uriValue, bool $isList = false)
   {
     // separate contraints
     $placeholder = explode(':', $placeholder);
