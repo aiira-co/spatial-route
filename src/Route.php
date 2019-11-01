@@ -42,7 +42,7 @@ class Route
     $isMatch = true;
     for ($i = 0; $i < $routeArrCount; $i++) {
       if ($routeArr[$i][0] !== '{') {
-        if (!($routeArr[$i] === $uriArr[$i])) {
+        if (!isset($uriArr[$i]) || !($routeArr[$i] === $uriArr[$i])) {
           $isMatch = false;
           break;
         }
