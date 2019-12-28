@@ -14,7 +14,7 @@ namespace Spatial\Router;
  */
 class ActivatedRoute
 {
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * Converts $_GET global  members into variables of this class
@@ -24,7 +24,7 @@ class ActivatedRoute
         foreach ($_REQUEST as $key => $value) {
             // clean it of any html params
             // for $_GET only: Remove an html tags and quotes
-            if (!(is_array($value) || ($value instanceof Traversable))) {
+            if (!(is_array($value) || ($value instanceof \Traversable))) {
                 $this->params[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
             } else {
                 $this->params[$key] = $value;
@@ -35,23 +35,23 @@ class ActivatedRoute
     /**
      * Method to get local varibles of this class
      */
-    private function _getParam($param, $args = [])
+    private function _getParam(string $param, array $args = [])
     {
         // Check if the param exists
         if (!array_key_exists($param, $this->params)) {
             return null;
             // throw new \Exception("The REQUEST Parameter: $param does not exist.");
         }
-        if (!empty($args)) {
-            return $this->$param[$param]($args);
-        }
+//        if (!empty($args)) {
+//            return $this->$param[$param]($args);
+//        }
         // Return the existing Param
         return $this->params[$param];
     }
 
     /**
      * Setter Method for the class
-     * 
+     *
      * @param string $key
      * @return void
      */
@@ -62,7 +62,7 @@ class ActivatedRoute
 
     /**
      * Getter Method for the class
-     * 
+     *
      * @param string $key
      * @return void
      */
