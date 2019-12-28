@@ -12,7 +12,7 @@ You should install [Route with Composer](https://getcomposer.org):
 composer require spatial/route
 ```
 
-Requires PHP 7.1 or newer.
+Requires PHP 7.4 or newer.
 
 ## Routing Basic
 
@@ -96,7 +96,7 @@ public class ProductsController extends ApiController
 ```
 
 Here are some possible HTTP requests, along with the action that gets invoked for each:
-| HTTP Verb | URI Path | Method / Action | Paramter |
+| HTTP Verb | URI Path | Method / Action | Parameter |
 |-----------|----------------|-----------------|----------|
 | GET | api/products | httpGet | (none) |
 | GET | api/products/4 | httpGet | 4 |
