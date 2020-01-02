@@ -5,8 +5,10 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "projectair",
-      "email": "airdesign.code@gmail.com"
+      "name": "Kofi Owusu-Afriyie",
+      "email": "airdesign.code@gmail.com",
+      "homepage": "https://github.com/air-Design",
+      "role": "Developer"
     }
   ],
   "require": {
