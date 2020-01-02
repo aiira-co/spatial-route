@@ -2,38 +2,14 @@
 
 require 'vendor/autoload.php';
 
+use Spatial\Api\Router;
 use Spatial\Router\Route;
 use Spatial\Router\RouterModule;
 
 $ri = new Route();
 
 $routes = [
-    $ri->mapRoute(
-        'Api',
-        'api/{controller}/public/{id:int}',
-        new class ()
-        {
-            public $id = 3;
-            public $content;
-            function __construct()
-            {
-                $this->content = file_get_contents('php://input');
-            }
-        }
-    ),
-    $ri->mapRoute(
-        'SuiteApi',
-        'suiteapi/{controller}/public/{id}',
-        new class ()
-        {
-            public $id = 3;
-            public $content;
-            function __construct()
-            {
-                $this->content = file_get_contents('php://input');
-            }
-        }
-    )
+    ... (new Router($ri))->getRoutes()
 ];
 
 // echo '<pre>';
@@ -60,7 +36,12 @@ $appModule->routeConfig(...$routes)
 
 // echo (new Request)->getBody();
 
-$appModule->render();
+try {
+    $appModule->render();
+} catch (ReflectionException $e) {
+//    http_response_code($e->getCode());
+    echo $e->getMessage();
+}
 
 
 

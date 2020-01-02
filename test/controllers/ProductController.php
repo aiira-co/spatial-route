@@ -11,9 +11,10 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
-
 class ProductController
 {
+
+    private Response $response;
     /**
      * Use constructor to Inject or instanciate dependecies
      */
