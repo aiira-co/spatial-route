@@ -13,5 +13,5 @@ interface CanActivate
      * @param string $url
      * @return boolean
      */
-    function canActivate(string $url): bool;
+    public function canActivate(string $url): bool;
 }

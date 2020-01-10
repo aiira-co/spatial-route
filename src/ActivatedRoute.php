@@ -8,7 +8,7 @@ namespace Spatial\Router;
  * ActivatedRoute Class exists in the Spatial\Router namespace
  * This class initialized $_GET global.
  * Strings sent through the GET global are passed through
- * the htmlspecialchar() function to remove any tags
+ * the html-special-char() function to remove any tags
  *
  * @category Router
  */
@@ -24,7 +24,7 @@ class ActivatedRoute
         foreach ($_REQUEST as $key => $value) {
             // clean it of any html params
             // for $_GET only: Remove an html tags and quotes
-            if (!(is_array($value) || ($value instanceof \Traversable))) {
+            if (!is_iterable($value)) {
                 $this->params[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
             } else {
                 $this->params[$key] = $value;
@@ -33,7 +33,33 @@ class ActivatedRoute
     }
 
     /**
-     * Method to get local varibles of this class
+     * Getter Method for the class
+     *
+     * @param string $key
+     * @return void
+     */
+    public function __get(string $key)
+    {
+        return $this->_getParam($key);
+    }
+
+    /**
+     * Setter Method for the class
+     *
+     * @param string $key
+     * @param $value
+     * @return void
+     */
+    public function __set(string $key, $value)
+    {
+        $this->params[$key] = $value;
+    }
+
+    /**
+     * Method to get local variables of this class
+     * @param string $param
+     * @param array $args
+     * @return mixed|null
      */
     private function _getParam(string $param, array $args = [])
     {
@@ -47,27 +73,5 @@ class ActivatedRoute
 //        }
         // Return the existing Param
         return $this->params[$param];
-    }
-
-    /**
-     * Setter Method for the class
-     *
-     * @param string $key
-     * @return void
-     */
-    public function __set(string $key, $value)
-    {
-        $this->params[$key] = $value;
-    }
-
-    /**
-     * Getter Method for the class
-     *
-     * @param string $key
-     * @return void
-     */
-    public function __get(string $key)
-    {
-        return $this->_getParam($key);
     }
 }

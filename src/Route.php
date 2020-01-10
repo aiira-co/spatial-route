@@ -6,11 +6,11 @@ namespace Spatial\Router;
 
 class Route
 {
-
-    private array $_routeMaps = [];
+    use SecurityTrait;
     public string $name;
     public string $routeTemplate;
     public object $defaults;
+
 
     public function mapRoute(string $name, string $routeTemplate, object $defaults): self
     {
@@ -21,18 +21,17 @@ class Route
         return clone $this;
     }
 
-    public function setHttpRoutes(Route ...$routeMap)
-    {
-        $this->_routeMaps = $routeMap;
-    }
-
-    public function getMaps(): array
-    {
-        return $this->_routeMaps;
-    }
-
+    /**
+     * @param array $uriArr
+     * @return bool
+     */
     public function isUriRoute(array $uriArr): bool
     {
+//        check first for authorization
+        if (!$this->isAuthorized) {
+            return false;
+        }
+
         $routeArr = explode('/', trim(urldecode($this->routeTemplate), '/'));
         $routeArrCount = count($routeArr);
         // var_dump($routeArr);
@@ -45,14 +44,14 @@ class Route
                     break;
                 }
             } else {
-                $placeholder = str_replace('}', '', str_replace('{', '', $routeArr[$i]));
+                $placeholder = str_replace(array('{', '}'), '', $routeArr[$i]);
                 // check to see if its the last placeholder
-                // AND if the placeholde is prefixed with `...`
+                // AND if the placeholder is prefixed with `...`
                 // meaning the placeholder is an array of the rest of the uriArr member
                 if ($i === ($routeArrCount - 1) && strpos($placeholder, '...') === 0) {
                     $placeholder = ltrim($placeholder, '/././.');
                     if (isset($uriArr[$i])) {
-                        for ($uri = $i; $uri < count($uriArr); $uri++) {
+                        for ($uri = $i, $uriMax = count($uriArr); $uri < $uriMax; $uri++) {
                             $this->assignValueToPlaceholder($placeholder, $uriArr[$uri], true);
                         }
                     }
@@ -64,11 +63,15 @@ class Route
         return $isMatch;
     }
 
-
-    private function assignValueToPlaceholder(string $placeholder, ?string $uriValue, bool $isList = false)
+    /**
+     * @param string $placeholderString
+     * @param string|null $uriValue
+     * @param bool $isList
+     */
+    private function assignValueToPlaceholder(string $placeholderString, ?string $uriValue, bool $isList = false): void
     {
-        // separate contraints
-        $placeholder = explode(':', $placeholder);
+        // separate constraints
+        $placeholder = explode(':', $placeholderString);
 
         $value = $uriValue ?? $this->defaults->{$placeholder[0]} ?? null;
 
@@ -77,8 +80,7 @@ class Route
             if (isset($typeValue[1])) {
                 $value = $value ?? $typeValue[1];
             }
-            if (!is_null($value)) {
-
+            if ($value !== null) {
                 switch ($placeholder[1]) {
                     case 'int':
                         $value = (int)$value;

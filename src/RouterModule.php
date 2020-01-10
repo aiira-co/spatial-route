@@ -5,21 +5,22 @@ declare(strict_types=1);
 namespace Spatial\Router;
 
 use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
+use ReflectionMethod;
 use Spatial\Psr7\Response;
 
 class RouterModule
 {
-
-    private Route $_routes;
+    use SecurityTrait;
+    private ActiveRoute $_routes;
     private Route $_routeMap;
     private string $_contentType;
     private string $_namespaceMap = '';
-    private bool $authorized = true;
-    private bool $cacheRoute = false;
+    private bool $isRouteCached = false;
 
     public function routeConfig(Route ...$routes): self
     {
-        $this->_routes = new Route;
+        $this->_routes = new ActiveRoute;
         // var_dump($routes);
         $this->_routes->setHttpRoutes(...$routes);
         return $this;
@@ -27,27 +28,13 @@ class RouterModule
 
     public function enableCache(bool $isProd): self
     {
-//        allow user to specify the cacheing Driver,
+//        allow user to specify the cache-ing Driver,
 //        Memcache or Redis
-        $this->cacheRoute = $isProd;
+        $this->isRouteCached = $isProd;
         return $this;
     }
 
-    /**
-     * @param CanActivate ...$guards
-     * @return $this
-     */
-    public function authGuard(CanActivate ...$guards): self
-    {
-        // cors can be part of the cors
-        foreach ($guards as $guard) {
-            if (!$guard->canActivate($_SERVER['REQUEST_URI'])) {
-                $this->authorized = false;
-                break;
-            }
-        }
-        return $this;
-    }
+
 
     /**
      * @param string $httpMethods
@@ -83,15 +70,16 @@ class RouterModule
 
     /**
      * @param string|null $uri
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public function render(?string $uri = null)
+    public function render(?string $uri = null): void
     {
-        if (!$this->authorized) {
+//        check first fir authorization
+        if (!$this->isAuthorized) {
             http_response_code(401);
             return;
         }
-        $uri = $uri ?? $_SERVER['REQUEST_URI'];
+        $uri = $uri ?? (string)$_SERVER['REQUEST_URI'];
         // echo $this->_resolve($uri)->getHeaderLine('Content-Type');
         $response = $this->_resolve($uri);
         $this->_setHeaders($response->getHeaders());
@@ -103,36 +91,14 @@ class RouterModule
         // echo $this->_resolve($uri)->getBody()->getContents();
     }
 
-
     /**
-     * @param array $headers
-     */
-    private function _setHeaders(array $headers)
-    {
-        // $headerKeys = array_keys($header);
-        if (!isset($headers['Content-Type'])) {
-            $headers['Content-Type'] = [$this->_contentType];
-        }
-
-        // var_dump($headers);
-        foreach ($headers as $header => $values) {
-            foreach ($values as $v) {
-                # code...
-                header($header . ':' . $v);
-            }
-        }
-    }
-
-
-    /**
-     * @param string $uri
+     * @param string $uriString
      * @return ResponseInterface
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    private function _resolve(string $uri): ResponseInterface
+    private function _resolve(string $uriString): ResponseInterface
     {
-
-        $uri = explode('/', trim($this->_formatRoute($uri), '/'));
+        $uri = explode('/', trim($this->_formatRoute($uriString), '/'));
         $isValid = false;
 
 //        if($this->cacheRoute){
@@ -140,7 +106,6 @@ class RouterModule
 //
 //        }
         foreach ($this->_routes->getMaps() as $route) {
-
             if ($route->isUriRoute($uri)) {
                 $isValid = true;
                 $this->_routeMap = $route;
@@ -152,17 +117,16 @@ class RouterModule
         }
 
         if (!property_exists($this->_routeMap->defaults, 'controller')) {
-            return (new Response())->withStatus(404, 'Controller not specied');
+            return (new Response())->withStatus(404, 'Controller not specified');
         }
 
         $controller = $this->_getController();
-        if (\is_null($controller)) {
+        if ($controller === null) {
             return (new Response())->withStatus(404, 'Controller not found');
         }
         $method = $this->_routeMap->defaults->action ?? $this->_getRequestedMethod();
         return $this->_getControllerMethod($controller, $method);
     }
-
 
     /**
      * @param $uri
@@ -194,34 +158,6 @@ class RouterModule
     }
 
     /**
-     * @param object $controller
-     * @param string $method
-     * @return ResponseInterface
-     * @throws \ReflectionException
-     */
-    private function _getControllerMethod(object $controller, string $method): ?ResponseInterface
-    {
-        if (method_exists($controller, $method)) {
-            $r = new \ReflectionMethod($controller, $method);
-            $args = [];
-            $params = $r->getParameters();
-            foreach ($params as $param) {
-                //$param is an instance of ReflectionParameter
-                if (!$param->isOptional() && !property_exists($this->_routeMap->defaults, $param->getName())) {
-
-                    die('argument ' . $param->getName() . ' required');
-                }
-                // echo $args;
-                array_push($args, $this->_routeMap->defaults->{$param->getName() ?? null});
-            }
-
-            return $controller->$method(...$args);
-        }
-        return null;
-    }
-
-
-    /**
      * @return string
      */
     private function _getRequestedMethod(): string
@@ -229,7 +165,7 @@ class RouterModule
 //        $method = 'httpGet';
 
 
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
             $httpRequest = $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'];
         } else {
             $httpRequest = $_SERVER['REQUEST_METHOD'];
@@ -259,5 +195,50 @@ class RouterModule
         }
 
         return $method;
+    }
+
+    /**
+     * @param object $controller
+     * @param string $method
+     * @return ResponseInterface
+     * @throws ReflectionException
+     */
+    private function _getControllerMethod(object $controller, string $method): ?ResponseInterface
+    {
+        if (method_exists($controller, $method)) {
+            $r = new ReflectionMethod($controller, $method);
+            $args = [];
+            $params = $r->getParameters();
+            foreach ($params as $param) {
+                //$param is an instance of ReflectionParameter
+                if (!$param->isOptional() && !property_exists($this->_routeMap->defaults, $param->getName())) {
+                    die('argument ' . $param->getName() . ' required');
+                }
+                // echo $args;
+                $args[] = $this->_routeMap->defaults->{$param->getName()};
+            }
+
+            return $controller->$method(...$args);
+        }
+        return null;
+    }
+
+    /**
+     * @param array $headers
+     */
+    private function _setHeaders(array $headers): void
+    {
+        // $headerKeys = array_keys($header);
+        if (!isset($headers['Content-Type'])) {
+            $headers['Content-Type'] = [$this->_contentType];
+        }
+
+        // var_dump($headers);
+        foreach ($headers as $header => $values) {
+            foreach ($values as $v) {
+                # code...
+                header($header . ':' . $v);
+            }
+        }
     }
 }
