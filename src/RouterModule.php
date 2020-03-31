@@ -35,7 +35,6 @@ class RouterModule
     }
 
 
-
     /**
      * @param string $httpMethods
      * @return $this
@@ -106,8 +105,14 @@ class RouterModule
 //
 //        }
         foreach ($this->_routes->getMaps() as $route) {
+//            print_r($route);
             if ($route->isUriRoute($uri)) {
                 $isValid = true;
+//                check for authguard
+                if (!$route->isAuthorized()) {
+                    return (new Response())->withStatus(401, 'Unauthorized');
+                }
+
                 $this->_routeMap = $route;
                 break;
             }

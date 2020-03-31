@@ -27,11 +27,6 @@ class Route
      */
     public function isUriRoute(array $uriArr): bool
     {
-//        check first for authorization
-        if (!$this->isAuthorized) {
-            return false;
-        }
-
         $routeArr = explode('/', trim(urldecode($this->routeTemplate), '/'));
         $routeArrCount = count($routeArr);
         // var_dump($routeArr);

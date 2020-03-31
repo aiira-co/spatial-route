@@ -21,4 +21,12 @@ trait SecurityTrait
         }
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isAuthorized(): bool
+    {
+        return $this->isAuthorized;
+    }
 }
