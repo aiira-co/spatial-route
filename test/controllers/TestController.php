@@ -6,6 +6,7 @@ use Core\Application\Logics\App\Queries\GetPersons;
 use Core\Application\Logics\App\Command\CreatePerson;
 use Core\Application\Logics\App\Command\UpdatePerson;
 use Core\Application\Logics\App\Command\DeletePerson;
+use Spatial\Core\Controller;
 use Spatial\MediatR\Mediator;
 use Spatial\Psr7\Response;
 
@@ -16,7 +17,7 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
-
+#[Controller]
 class TestController
 {
     /**
@@ -59,7 +60,6 @@ class TestController
      */
     public function httpPut(string $content, int $id): Response
     {
-
         // code here
         $r = new UpdatePerson();
         $r->data = json_decode($content);

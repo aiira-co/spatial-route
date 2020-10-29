@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatial\Router;
+namespace Spatial\Router\Interface;
 
 /**
  * Interface to AuthGuard-ing

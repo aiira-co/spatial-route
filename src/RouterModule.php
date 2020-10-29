@@ -7,20 +7,22 @@ namespace Spatial\Router;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 use ReflectionMethod;
+use Spatial\Interface\IRouteModule;
 use Spatial\Psr7\Response;
+use Spatial\Router\Trait\SecurityTrait;
 
-class RouterModule
+class RouterModule implements  IRouteModule
 {
     use SecurityTrait;
-    private ActiveRoute $_routes;
-    private Route $_routeMap;
+    private ActiveRouteTemplate $_routes;
+    private RouteTemplate $_routeMap;
     private string $_contentType;
     private string $_namespaceMap = '';
     private bool $isRouteCached = false;
 
-    public function routeConfig(Route ...$routes): self
+    public function routeConfig(RouteTemplate ...$routes): self
     {
-        $this->_routes = new ActiveRoute;
+        $this->_routes = new ActiveRouteTemplate;
         // var_dump($routes);
         $this->_routes->setHttpRoutes(...$routes);
         return $this;
@@ -78,7 +80,7 @@ class RouterModule
             http_response_code(401);
             return;
         }
-        $uri = $uri ?? (string)$_SERVER['REQUEST_URI'];
+        $uri = $uri ?? $_SERVER['REQUEST_URI'];
         // echo $this->_resolve($uri)->getHeaderLine('Content-Type');
         $response = $this->_resolve($uri);
         $this->_setHeaders($response->getHeaders());
@@ -177,35 +179,19 @@ class RouterModule
         }
 
 
-        switch ($httpRequest) {
-            case 'GET':
-                $method = 'httpGet';
-                break;
-
-            case 'POST':
-                $method = 'httpPost';
-                break;
-
-            case 'PUT':
-                $method = 'httpPut';
-                break;
-
-            case 'DELETE':
-                $method = 'httpDelete';
-                break;
-
-            default:
-                $method = 'http' . ucfirst(strtolower($httpRequest));
-                break;
-        }
-
-        return $method;
+        return match ($httpRequest) {
+            'GET' => 'httpGet',
+            'POST' => 'httpPost',
+            'PUT' => 'httpPut',
+            'DELETE' => 'httpDelete',
+            default => 'http' . ucfirst(strtolower($httpRequest)),
+        };
     }
 
     /**
      * @param object $controller
      * @param string $method
-     * @return ResponseInterface
+     * @return ResponseInterface|null
      * @throws ReflectionException
      */
     private function _getControllerMethod(object $controller, string $method): ?ResponseInterface

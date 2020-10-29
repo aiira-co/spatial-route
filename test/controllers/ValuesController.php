@@ -2,6 +2,7 @@
 
 namespace Spatial\Api\Controllers;
 
+use Spatial\Core\Controller;
 use Spatial\Psr7\Response;
 
 /**
@@ -11,7 +12,7 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
-
+#[Controller]
 class ValuesController
 {
     /**
@@ -48,7 +49,7 @@ class ValuesController
         $postId = null;
 
         // code here
-        $data =  ['success' => true, 'alert' => 'We have it at post', 'id' => $postId];
+        $data = ['success' => true, 'alert' => 'We have it at post', 'id' => $postId];
         $payload = json_encode($data);
         $this->response->getBody()->write($payload);
         return $this->response;
@@ -62,7 +63,6 @@ class ValuesController
      */
     public function httpPut(string $content, int $id): Response
     {
-
         // code here
         $data = ['success' => true, 'alert' => 'We have it at put'];
         $payload = json_encode($data);

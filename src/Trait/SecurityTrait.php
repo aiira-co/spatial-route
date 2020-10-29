@@ -1,16 +1,18 @@
 <?php
 
-namespace Spatial\Router;
+namespace Spatial\Router\Trait;
+
+use Spatial\Router\Interface\IApiModule;
 
 trait SecurityTrait
 {
     private bool $isAuthorized = true;
 
     /**
-     * @param CanActivate ...$guards
+     * @param IApiModule ...$guards
      * @return $this
      */
-    public function authGuard(CanActivate ...$guards): self
+    public function authGuard(IApiModule ...$guards): self
     {
         // cors can be part of the cors
         foreach ($guards as $guard) {

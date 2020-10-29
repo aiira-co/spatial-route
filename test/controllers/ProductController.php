@@ -2,6 +2,7 @@
 
 namespace Spatial\Api\Controllers;
 
+use JsonException;
 use Spatial\Psr7\Response;
 
 /**
@@ -11,10 +12,14 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
+#[Controller]
+#[Area('Products')]
+#[Route('/products/')]
 class ProductController
 {
 
     private Response $response;
+
     /**
      * Use constructor to Inject or instanciate dependecies
      */
@@ -27,9 +32,28 @@ class ProductController
      * The Method httpGet() called to handle a GET request
      * URI: POST: https://api.com/values
      * URI: POST: https://api.com/values/2 ,the number 2 in the uri is passed as int ...$id to the method
+     * @throws JsonException
      */
-    public function httpGet(int ...$id): Response
+    #[HttpGet]
+    public function productList(): Response
     {
+        $data = [
+            'app api',
+            'value1',
+            'value2'
+        ];
+        $payload = json_encode($data, JSON_THROW_ON_ERROR);
+
+        $this->response->getBody()->write($payload);
+        return $this->response;
+        // ->withHeader('Content-Type', 'application/json');
+        // ->withHeader('Content-Disposition', 'attachment;filename="downloaded.pdf"');
+    }
+
+    #[HttpGet('{id:int}')]
+    public function getProduct(
+        int $id
+    ): Response {
         $data = [
             'app api',
             'value1',

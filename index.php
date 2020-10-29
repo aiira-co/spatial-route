@@ -2,11 +2,32 @@
 
 require 'vendor/autoload.php';
 
+use Spatial\Api\AppModule;
 use Spatial\Api\Router;
-use Spatial\Router\Route;
+use Spatial\Core\App;
+use Spatial\Router\RouteTemplate;
 use Spatial\Router\RouterModule;
 
-$ri = new Route();
+//config/environment
+//$environmentProduction = true;
+//if($environmentProduction){
+//    enableProduction(); // cache routes and results to redis/ ram driver
+//}
+
+
+//main
+$app = new App();
+try {
+    $app->bootstrapModule(AppModule::class)
+        ->catch(fn() => die('error'));
+} catch (ReflectionException $e) {
+}
+
+die('testing new with attributes');
+
+
+
+$ri = new RouteTemplate();
 
 $routes = [
     ... (new Router($ri))->getRoutes()

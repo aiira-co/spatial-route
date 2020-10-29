@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Spatial\Router;
 
 
-class ActiveRoute extends Route
+class ActiveRouteTemplate extends RouteTemplate
 {
     private array $_routeMaps = [];
 
     /**
-     * @param Route ...$routeMap
+     * @param RouteTemplate ...$routeMap
      */
-    public function setHttpRoutes(Route ...$routeMap): void
+    public function setHttpRoutes(RouteTemplate ...$routeMap): void
     {
         $this->_routeMaps = $routeMap;
     }
