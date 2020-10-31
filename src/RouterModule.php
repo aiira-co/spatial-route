@@ -14,15 +14,15 @@ use Spatial\Router\Trait\SecurityTrait;
 class RouterModule implements  IRouteModule
 {
     use SecurityTrait;
-    private ActiveRouteTemplate $_routes;
-    private RouteTemplate $_routeMap;
+    private ActiveRouteBuilder $_routes;
+    private RouteBuilder $_routeMap;
     private string $_contentType;
     private string $_namespaceMap = '';
     private bool $isRouteCached = false;
 
-    public function routeConfig(RouteTemplate ...$routes): self
+    public function routeConfig(RouteBuilder ...$routes): self
     {
-        $this->_routes = new ActiveRouteTemplate;
+        $this->_routes = new ActiveRouteBuilder;
         // var_dump($routes);
         $this->_routes->setHttpRoutes(...$routes);
         return $this;

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Spatial\Api;
 
-use Spatial\Router\RouteTemplate;
+use Spatial\Core\ApiModule;
+use Spatial\Router\RouteBuilder;
 
-$route = new RouteTemplate();
+$route = new RouteBuilder();
 
 $routes = [
     $route->mapRoute(
@@ -37,6 +38,16 @@ $routes = [
     )
 ];
 
-class Router
+#[ApiModule()]
+class RouterModule
 {
+    /**
+     * Method is called for app configuration
+     * configure routing here
+     * @param $app
+     */
+    public function configure($app):void
+    {
+
+    }
 }

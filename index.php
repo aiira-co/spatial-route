@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 use Spatial\Api\AppModule;
 use Spatial\Api\Router;
 use Spatial\Core\App;
-use Spatial\Router\RouteTemplate;
+use Spatial\Router\RouteBuilder;
 use Spatial\Router\RouterModule;
 
 //config/environment
@@ -27,7 +27,7 @@ die('testing new with attributes');
 
 
 
-$ri = new RouteTemplate();
+$ri = new RouteBuilder();
 
 $routes = [
     ... (new Router($ri))->getRoutes()

@@ -34,10 +34,10 @@ To determine which action to invoke, the framework uses a routing table.
 <?php
 require '/path/to/vendor/autoload.php';
 
-use Spatial\Router\RouteTemplate;
+use Spatial\Router\RouteBuilder;
 use Spatial\Router\RouterModule;
 
-$route = new RouteTemplate();
+$route = new RouteBuilder();
 $route->mapRoute(
     "DefaultAPI", // name
     "api/{controller}/{id}", //routeTemplate
@@ -127,10 +127,10 @@ In this route template, the {action} parameter names the action method on the co
 
 require '/path/to/vendor/autoload.php';
 
-use Spatial\Router\RouteTemplate;
+use Spatial\Router\RouteBuilder;
 use Spatial\Router\RouterModule;
 
-$ri = new RouteTemplate();
+$ri = new RouteBuilder();
 
 // create an array or a single of routes
 $routes = [
@@ -197,10 +197,10 @@ Say we have a route
 ```php
 require '/path/to/vendor/autoload.php';
 
-use Spatial\Router\RouteTemplate;
+use Spatial\Router\RouteBuilder;
 use Spatial\Router\RouterModule;
 
-$route = new RouteTemplate();
+$route = new RouteBuilder();
 $route->mapRoute(
     "DefaultAPI", // name
     "api/{controller}/{...param}", //routeTemplate
