@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatial\Router\Interface;
+namespace Spatial\Router\Interfaces;
 
 /**
- * Interface to AuthGuard-ing
+ * Interfaces to AuthGuard-ing
  */
 interface CanActivate
 {

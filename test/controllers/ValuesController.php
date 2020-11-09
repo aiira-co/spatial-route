@@ -2,7 +2,7 @@
 
 namespace Spatial\Api\Controllers;
 
-use Spatial\Core\Controller;
+use Spatial\Core\Attributes\ApiController;
 use Spatial\Psr7\Response;
 
 /**
@@ -12,7 +12,7 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
-#[Controller]
+#[ApiController]
 class ValuesController
 {
     /**

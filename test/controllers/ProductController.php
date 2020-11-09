@@ -3,6 +3,11 @@
 namespace Spatial\Api\Controllers;
 
 use JsonException;
+use Spatial\Common\BindSourceAttributes\FromRoute;
+use Spatial\Common\HttpAttributes\HttpGet;
+use Spatial\Core\Attributes\ApiController;
+use Spatial\Core\Attributes\Area;
+use Spatial\Core\Attributes\Route;
 use Spatial\Psr7\Response;
 
 /**
@@ -12,16 +17,16 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
-#[Controller]
-#[Area('Products')]
-#[Route('/products/')]
+#[ApiController]
+#[Area('store-api')]
+#[Route('[area]/products/')]
 class ProductController
 {
 
     private Response $response;
 
     /**
-     * Use constructor to Inject or instanciate dependecies
+     * Use constructor to Inject or instantiate dependencies
      */
     public function __construct()
     {
@@ -52,7 +57,7 @@ class ProductController
 
     #[HttpGet('{id:int}')]
     public function getProduct(
-        int $id
+        #[FromRoute] int $id
     ): Response {
         $data = [
             'app api',
@@ -60,11 +65,19 @@ class ProductController
             'value2',
             $id
         ];
-        $payload = json_encode($data);
+        $payload = json_encode($data, JSON_THROW_ON_ERROR);
 
         $this->response->getBody()->write($payload);
         return $this->response;
         // ->withHeader('Content-Type', 'application/json');
         // ->withHeader('Content-Disposition', 'attachment;filename="downloaded.pdf"');
+    }
+
+    #[Route('edit')]
+    #[Route('/home/more')]
+    #[HttpGet('{id}')]
+    public function editProduct(
+        int $id
+    ) {
     }
 }

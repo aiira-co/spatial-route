@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a8bf52d-358e-440d-b04f-304a762255ef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Interface/IRouteBuilder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RouteBuilder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/controllers/MyBaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/spatial-route.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spatial-route.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ActiveRouteTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ActiveRouteBuilder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RouteTemplate.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RouterModule.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RouterModule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/AppModule.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/AppModule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/RouterModule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Interface/CanActivate.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/CanActivate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Interface/IRouteBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/IRouteBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Interface/IRoutingTemplateProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/IRoutingTemplateProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RouteBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RouteBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/AppModule.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/TestModule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/TestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/ValuesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/ValuesController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,15 +39,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/vendor/spatial/core/src/core/App.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/vendor/spatial/core/src/core/ApplicationBuilder.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.0">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-server-handler" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/vendor/spatial/core" />
       <path value="$PROJECT_DIR$/vendor/spatial/psr7" />
-      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-server-handler" />
     </include_path>
   </component>
   <component name="ProjectId" id="1jWtUmwEBWY2HJrVB2xNH0Ll35B" />
@@ -60,8 +70,29 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
+  </component>
+  <component name="RunManager" selected="PHP Built-in Web Server.Route Server">
+    <configuration name="Route Server" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="$PROJECT_DIR$" port="5200">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index.php">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHP Built-in Web Server.Route Server" />
+      <item itemvalue="PHP Script.index.php" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.index.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -76,7 +107,15 @@
       <workItem from="1604061632055" duration="634000" />
       <workItem from="1604063906522" duration="120000" />
       <workItem from="1604064300913" duration="428000" />
-      <workItem from="1604073911883" duration="2057000" />
+      <workItem from="1604073911883" duration="3527000" />
+      <workItem from="1604191733590" duration="4485000" />
+      <workItem from="1604283325107" duration="254000" />
+      <workItem from="1604283705870" duration="119000" />
+      <workItem from="1604284169951" duration="15548000" />
+      <workItem from="1604673393576" duration="116000" />
+      <workItem from="1604680376082" duration="10910000" />
+      <workItem from="1604926709686" duration="268000" />
+      <workItem from="1604927178946" duration="12701000" />
     </task>
     <servers />
   </component>
@@ -93,5 +132,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

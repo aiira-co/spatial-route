@@ -2,8 +2,8 @@
 
 require 'vendor/autoload.php';
 
-use Spatial\Api\AppModule;
-use Spatial\Api\Router;
+
+use Spatial\Api\TestModule;
 use Spatial\Core\App;
 use Spatial\Router\RouteBuilder;
 use Spatial\Router\RouterModule;
@@ -14,24 +14,24 @@ use Spatial\Router\RouterModule;
 //    enableProduction(); // cache routes and results to redis/ ram driver
 //}
 
-
+//echo  phpinfo();
 //main
 $app = new App();
 try {
-    $app->bootstrapModule(AppModule::class)
-        ->catch(fn() => die('error'));
+    $app->bootstrapModule(TestModule::class)
+        ?->catch(fn() => die('error'));
 } catch (ReflectionException $e) {
 }
 
-die('testing new with attributes');
-
-
-
-$ri = new RouteBuilder();
-
-$routes = [
-    ... (new Router($ri))->getRoutes()
-];
+//die('testing new with attributes');
+//
+//
+//
+//$ri = new RouteBuilder();
+//
+//$routes = [
+//    ... (new Router($ri))->getRoutes()
+//];
 
 // echo '<pre>';
 // var_dump($routes);
@@ -46,23 +46,23 @@ $routes = [
 //     ]
 //     );
 
-$appModule = new RouterModule();
-$appModule->routeConfig(...$routes)
-    ->allowedMethods('GET, POST, PUT, DELETE')
-    ->enableCache(true)
-    ->authGuard()
-    ->defaultContentType('application/json')
-    ->controllerNamespaceMap('Spatial\\{name}\\Controllers\\');
+//$appModule = new RouterModule();
+//$appModule->routeConfig(...$routes)
+//    ->allowedMethods('GET, POST, PUT, DELETE')
+//    ->enableCache(true)
+//    ->authGuard()
+//    ->defaultContentType('application/json')
+//    ->controllerNamespaceMap('Spatial\\{name}\\Controllers\\');
 // ->defaultParams('Spatial\\{name}\\Controllers\\');
 
 // echo (new Request)->getBody();
 
-try {
-    $appModule->render();
-} catch (ReflectionException $e) {
+//    $appModule->render();
+//} catch (ReflectionException $e) {
+//try {
 //    http_response_code($e->getCode());
-    echo $e->getMessage();
-}
+//    echo $e->getMessage();
+//}
 
 
 

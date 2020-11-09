@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Spatial\Router;
 
-use Spatial\Router\Interface\IRouteBuilder;
+
 use Spatial\Router\Trait\SecurityTrait;
 
-class RouteBuilder implements IRouteBuilder
+class RouteBuilder
 {
     use SecurityTrait;
 
@@ -15,8 +15,20 @@ class RouteBuilder implements IRouteBuilder
     public string $pattern;
     public object $defaults;
 
+    public bool $useAttributeRouting;
 
-    public function mapRoute(string $name, string $pattern, ?object $defaults = null): self
+    public function mapDefaultControllerRoute(): void
+    {
+        $this->name = 'default';
+        $this->pattern = '{controller=Home}/{action=Index}/{id?}';
+    }
+
+    public function mapControllers(): void
+    {
+        $this->useAttributeRouting = true;
+    }
+
+    public function mapControllerRoute(string $name, string $pattern, ?object $defaults = null): self
     {
         $this->name = trim($name);
         $this->pattern = urlencode(trim($pattern, '/'));
@@ -31,8 +43,6 @@ class RouteBuilder implements IRouteBuilder
                     $this->content = file_get_contents('php://input');
                 }
             };
-
-
 
 
         return new $this;

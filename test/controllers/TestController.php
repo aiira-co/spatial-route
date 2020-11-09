@@ -17,8 +17,7 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
-#[Controller]
-class TestController
+class TestController extends MyBaseController
 {
     /**
      * Use constructor to Inject or instanciate dependecies

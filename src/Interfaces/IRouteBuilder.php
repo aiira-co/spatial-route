@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Spatial\Router\Interface;
+namespace Spatial\Router\Interfaces;
 
 interface IRouteBuilder
 {
