@@ -6,6 +6,7 @@ use Core\Application\Logics\App\Queries\GetPersons;
 use Core\Application\Logics\App\Command\CreatePerson;
 use Core\Application\Logics\App\Command\UpdatePerson;
 use Core\Application\Logics\App\Command\DeletePerson;
+use Spatial\Core\Attributes\Route;
 use Spatial\Core\Controller;
 use Spatial\MediatR\Mediator;
 use Spatial\Psr7\Response;
@@ -17,6 +18,7 @@ use Spatial\Psr7\Response;
  *
  * @category Controller
  */
+#[Route('[controller]/[action]')]
 class TestController extends MyBaseController
 {
     /**

@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a8bf52d-358e-440d-b04f-304a762255ef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/controllers/MyBaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/spatial-route.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spatial-route.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface/CanActivate.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/CanActivate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface/IRouteBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/IRouteBuilder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface/IRoutingTemplateProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interfaces/IRoutingTemplateProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RouteBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RouteBuilder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/AppModule.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/TestModule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/ProductController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/controllers/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/TestController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/controllers/ValuesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/ValuesController.php" afterDir="false" />
     </list>
@@ -115,7 +103,7 @@
       <workItem from="1604673393576" duration="116000" />
       <workItem from="1604680376082" duration="10910000" />
       <workItem from="1604926709686" duration="268000" />
-      <workItem from="1604927178946" duration="12701000" />
+      <workItem from="1604927178946" duration="19093000" />
     </task>
     <servers />
   </component>

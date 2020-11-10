@@ -3,6 +3,8 @@
 namespace Spatial\Api\Controllers;
 
 use Spatial\Core\Attributes\ApiController;
+use Spatial\Core\Attributes\Area;
+use Spatial\Core\Attributes\Route;
 use Spatial\Psr7\Response;
 
 /**
@@ -13,6 +15,8 @@ use Spatial\Psr7\Response;
  * @category Controller
  */
 #[ApiController]
+#[Area('aiira')]
+#[Route('[area]/[controller]/secret/[action]')]
 class ValuesController
 {
     /**
@@ -44,8 +48,10 @@ class ValuesController
      * This method requires a body(json) which is passed as the var array $content
      * URI: POST: https://api.com/values
      */
-    public function httpPost(string $content): Response
-    {
+    #[Area('studio')]
+    public function httpPost(
+        string $content
+    ): Response {
         $postId = null;
 
         // code here
